@@ -1,0 +1,26 @@
+{
+  "slug": "kingofflavour",
+  "name": "King Of Flavour",
+  "version": "2.0.0",
+  "license": "CC BY-NC 4.0",
+  "brand": "King Of Flavour",
+  "author": "James Frize",
+  "authorEmail": "jim@sonodrome.co.uk",
+  "authorUrl": "sonodrome.co.uk",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "",
+  "donateUrl": "",
+  "changelogUrl": "",
+  "modules": [
+    {
+      "slug": "MSG",
+      "name": "MSG",
+      "description": "Harmonic Exciter",
+      "tags": [
+        "Distortion",
+        "Effect"
+      ]
+    }
+  ]
+}
