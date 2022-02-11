@@ -1,13 +1,14 @@
 #include "plugin.hpp"
 #include <dsp/filter.hpp>
 
-rack::dsp::TRCFilter<float> LEFT_HPF;
-rack::dsp::TRCFilter<float> RIGHT_HPF;
-rack::dsp::TRCFilter<float> LEFT_HPF2;
-rack::dsp::TRCFilter<float> RIGHT_HPF2;
-
 struct MSG : Module
 {
+
+	rack::dsp::TRCFilter<float> LEFT_HPF;
+	rack::dsp::TRCFilter<float> RIGHT_HPF;
+	rack::dsp::TRCFilter<float> LEFT_HPF2;
+	rack::dsp::TRCFilter<float> RIGHT_HPF2;
+	
 	enum ParamId
 	{
 		DRIVE_PARAM,
