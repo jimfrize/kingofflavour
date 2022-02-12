@@ -42,7 +42,7 @@ struct MSG : Module
 	{
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
-		configParam(DRIVE_PARAM, std::log2(1.f), std::log2(10.f), std::log2(1.f), "drive", "", 2.f);
+		configParam(DRIVE_PARAM, 0.f, 1.f, 0.f, "drive");
 		configParam(CUTOFF_PARAM, std::log2(20000.f), std::log2(20.f), std::log2(20000.f), "cutoff", "Hz", 2.f);
 		configParam(MIX_PARAM, 0.f, 1.f, 0.5f, "mix");
 		configParam(COMP_PARAM, 0.f, 1.f, 0.5f, "compenstaion");
@@ -111,8 +111,8 @@ struct MSG : Module
 			// get & calculate shared parameters //
 			///////////////////////////////////////
 
-			drive = std::pow( 2.f, params[DRIVE_PARAM].getValue() ) * drive_cv;
-			range = ( 20000.f - std::pow( 2.f, params[CUTOFF_PARAM].getValue() ) ) * cutoff_cv;
+			drive = std::pow(params[DRIVE_PARAM].getValue() * drive_cv, 2.f) * 99.f + 1.f;
+			range = ( 20000.f - std::pow(2.f, params[CUTOFF_PARAM].getValue()) ) * cutoff_cv;
 			cutoff = 20000.f - range;
 			mix = params[MIX_PARAM].getValue() * mix_cv;
 			comp = std::pow(params[COMP_PARAM].getValue() * comp_cv, 2.f);
@@ -161,7 +161,7 @@ struct MSG : Module
 				RIGHT_HPF2.process(dist);
 				dist = RIGHT_HPF2.highpass();
 
-				float output = (dist * mix) + ( (1.f - mix) * (right * 2.f)); // calculate output
+				float output = (dist * mix) + ( (1.f - mix) * (right * 4.f)); // calculate output
 				outputs[RIGHT_OUTPUT].setVoltage(output * comp);
 			}
 		}
