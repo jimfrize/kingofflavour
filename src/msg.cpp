@@ -45,7 +45,7 @@ struct MSG : Module
 		configParam(DRIVE_PARAM, std::log2(1.f), std::log2(10.f), std::log2(1.f), "drive", "", 2.f);
 		configParam(CUTOFF_PARAM, std::log2(20000.f), std::log2(20.f), std::log2(20000.f), "cutoff", "Hz", 2.f);
 		configParam(MIX_PARAM, 0.f, 1.f, 0.5f, "mix");
-		configParam(COMP_PARAM, 0.f, 2.f, 1.f, "compenstaion");
+		configParam(COMP_PARAM, 0.f, 1.f, 0.5f, "compenstaion");
 
 		configInput(LEFT_INPUT, "left input");
 		configInput(RIGHT_INPUT, "right input");
@@ -115,7 +115,7 @@ struct MSG : Module
 			range = ( 20000.f - std::pow( 2.f, params[CUTOFF_PARAM].getValue() ) ) * cutoff_cv;
 			cutoff = 20000.f - range;
 			mix = params[MIX_PARAM].getValue() * mix_cv;
-			comp = params[COMP_PARAM].getValue() * comp_cv;
+			comp = std::pow(params[COMP_PARAM].getValue() * comp_cv, 2.f);
 
 			///////////////////////////////////
 			// calculate and set left output //
@@ -137,7 +137,7 @@ struct MSG : Module
 				LEFT_HPF2.process(dist);
 				dist = LEFT_HPF2.highpass();
 
-				float output = (dist * mix) + ( (1.f - mix) * (left * 2.f)); // calculate output
+				float output = (dist * mix) + ( (1.f - mix) * (left * 4.f)); // calculate output
 				outputs[LEFT_OUTPUT].setVoltage(output * comp);
 			}
 
